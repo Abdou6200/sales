@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\hemhe\\OneDrive\\Bureau\\123\\back\\logs\\.16a837c7dbbe5bdf3836af620f79f9a4ca1865f9-audit.json",
+    "files": [
+        {
+            "date": 1745956668342,
+            "name": "C:\\Users\\hemhe\\OneDrive\\Bureau\\123\\back\\logs\\2025-04-29.log",
+            "hash": "07c6fbe5edca2230dd06a8b53d8a654b2759f99c8c5eba2cbed5ab9960ccead3"
+        }
+    ],
+    "hashType": "sha256"
+}

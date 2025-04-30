@@ -22,13 +22,13 @@ export const HeroSection = (): JSX.Element => {
         <div className="flex flex-col items-start gap-10 w-full">
           <Badge className="bg-[#ffffff1a] hover:bg-[#ffffff30] text-white rounded-none px-4 py-3">
             <span className="font-bold text-base tracking-[0.80px] font-['DM_Sans',Helvetica]">
-              Furniture
+              Offers
             </span>
           </Badge>
 
           <h1 className="text-white text-[70px] font-bold leading-[80px] font-['DM_Sans',Helvetica]">
-            Where Traditional <br />
-            Meets Modern
+            Sales <br />
+            The best out there
           </h1>
 
           <p className="text-[#ffffffcc] text-base leading-7 max-w-[550px] font-['DM_Sans',Helvetica]">
