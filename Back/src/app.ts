@@ -6,7 +6,6 @@ import { corsUrl, environment } from './configVars';
 import './database'; // initialize database
 import { NotFoundError, ApiError, InternalError } from './core/ApiError';
 import routesV1 from './routes';
-import { specs } from './docs';
 
 process.on('uncaughtException', (e) => {
   // Logger.error(e);
@@ -20,8 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({ origin: corsUrl, optionsSuccessStatus: 200, credentials: true })
 );
-
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 // Routes
 app.use('/api', routesV1);
