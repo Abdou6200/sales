@@ -98,8 +98,7 @@ export const ContactFormSection = (): JSX.Element => {
                 Contact Us
               </h1>
               <p className="w-full max-w-[585px] font-['DM_Sans',Helvetica] font-normal text-black text-base leading-7">
-                Suspendisse leo et cursus pharetra tellus tincidunt. Risus nulla
-                penatibus donec elementum nulla
+                Feel free to let us know of your opinion or on any complaint.
               </p>
             </div>
 

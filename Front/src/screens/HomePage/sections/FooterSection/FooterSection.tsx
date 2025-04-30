@@ -9,153 +9,94 @@ import { Button } from "../../../../components/ui/button";
 import { Input } from "../../../../components/ui/input";
 
 export const FooterSection = (): JSX.Element => {
-  // Footer navigation data
+  // Shop links with proper hrefs
   const shopLinks = [
-    "Chairs",
-    "Beds",
-    "Sofas",
-    "Cabinets",
-    "Armchairs",
-    "Sale",
+    { name: "Home", href: "/home" },
+    { name: "Shop", href: "/shop" },
+    { name: "About Us", href: "/about" },
+    { name: "Contact Us", href: "/contact" }
   ];
 
+  // All customer service links redirect to /shop
   const customerServiceLinks = [
-    "Orders",
-    "Addresses",
-    "Returns",
-    "Account details",
-    "F.A.Q",
+    "Cashback",
+    "Promo Code",
+    "Bon De Reduction"
   ];
-
-  const deliveryLinks = ["Orders", "Return", "Free Delivery"];
 
   return (
-    <footer className="flex flex-col items-center gap-20 pt-[60px] pb-5 px-6 md:px-20 lg:px-[312px] relative w-full bg-[#f6f4f2]">
-      {/* Newsletter subscription section */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between relative w-full gap-6">
-        <div className="flex flex-col items-start gap-6 relative">
-          <h3 className="relative w-fit [font-family:'DM_Sans',Helvetica] font-bold text-defaultblack text-[28px] tracking-[0] leading-normal">
-            Subscribe to our newsletter
-          </h3>
-          <h4 className="relative w-fit [font-family:'DM_Sans',Helvetica] font-bold text-defaultblack text-[28px] tracking-[0] leading-normal">
-            Don&apos;t miss latest news &amp; promotions
-          </h4>
-        </div>
-
-        <div className="flex flex-col md:flex-row items-end gap-2 relative w-full md:w-auto lg:w-[636px]">
-          <Input
-            className="h-[54px] pl-4 pr-[7px] py-1 bg-defaultwhite border border-solid border-[#dee2e6] [font-family:'DM_Sans',Helvetica] font-medium text-xl"
-            placeholder="Enter your email"
-          />
-          <Button className="w-full md:w-[205px] h-[54px] bg-[#947458] hover:bg-[#7d6249] [font-family:'DM_Sans',Helvetica] font-medium text-defaultwhite text-xl rounded-none">
-            Subscribe
-          </Button>
-        </div>
-      </div>
-
-      {/* Main footer content */}
-      <div className="flex flex-col md:flex-row items-start justify-between relative w-full gap-10 md:gap-4">
-        {/* Company info */}
-        <div className="flex flex-col items-start gap-5 relative">
-          <div className="flex items-center gap-2 relative">
-            <div className="relative w-6 h-6">
+    <footer className="flex flex-col items-center gap-20 pt-[60px] pb-5 px-6 md:px-20 lg:px-32 relative w-full bg-[#f6f4f2]">
+      {/* Footer Navigation and Info */}
+      <div className="flex flex-col md:flex-row items-start justify-between w-full gap-10 md:gap-4">
+        {/* Company Info */}
+        <div className="flex flex-col items-start gap-5">
+          <div className="flex items-center gap-2">
+            <div className="relative w-10 h-10">
               <img
-                className="absolute w-[21px] h-6 top-0 left-0.5"
+                className="absolute w-[100px] h-9 top-0 left-0.5"
                 alt="Cabinet"
-                src="/cabinet-1.png"
+                src="/Logo1BG.png"
               />
             </div>
-            <div className="[font-family:'Inter',Helvetica] font-bold text-defaultblack text-xl relative w-fit tracking-[0] leading-normal">
-              f Store
-            </div>
           </div>
 
-          <div className="text-sm relative w-fit [font-family:'DM_Sans',Helvetica] font-medium text-[#00000099] tracking-[0] leading-normal">
-            60 Fremont Ave. Hamden, CT 06514
+          <div className="font-sans font-medium text-[#00000099] text-sm">
+            Av. de Yasser Arafat, Sousse 4051
           </div>
 
-          <div className="flex items-start gap-1 relative">
-            <span className="relative w-fit [font-family:'DM_Sans',Helvetica] font-medium text-defaultblack text-sm tracking-[0] leading-normal">
+          <div className="flex items-start gap-1">
+            <div className="font-sans font-medium text-black text-sm">
               Email:
-            </span>
-            <span className="[font-family:'DM_Sans',Helvetica] font-medium text-[#00000099] text-sm relative w-fit tracking-[0] leading-normal">
-              fStore@email.com
-            </span>
+            </div>
+            <div className="font-sans font-medium text-[#00000099] text-sm">
+              Sales.tn@email.com
+            </div>
           </div>
 
-          <div className="flex items-start gap-1 relative">
-            <span className="relative w-fit [font-family:'DM_Sans',Helvetica] font-medium text-defaultblack text-sm tracking-[0] leading-normal">
+          <div className="flex items-start gap-1">
+            <div className="font-sans font-medium text-black text-sm">
               Phone:
-            </span>
-            <span className="relative w-fit [font-family:'DM_Sans',Helvetica] font-medium text-[#00000099] text-sm tracking-[0] leading-normal">
-              (928) 630-9272
-            </span>
+            </div>
+            <div className="font-sans font-medium text-[#00000099] text-sm">
+              (+216) 58 084 275
+            </div>
           </div>
 
-          {/* Social media icons */}
-          <div className="flex items-start gap-3 relative">
-            <div className="relative w-6 h-6 bg-black rounded-[100px] flex items-center justify-center">
-              <FacebookIcon className="w-3.5 h-3.5 text-white" />
-            </div>
-            <div className="relative w-6 h-6 bg-black rounded-[100px] flex items-center justify-center">
-              <TwitterIcon className="w-3.5 h-3.5 text-white" />
-            </div>
-            <div className="relative w-6 h-6 bg-black rounded-[100px] flex items-center justify-center">
-              <InstagramIcon className="w-3.5 h-3.5 text-white" />
-            </div>
-            <div className="relative w-6 h-6 bg-black rounded-[100px] flex items-center justify-center">
-              <YoutubeIcon className="w-3.5 h-3.5 text-white" />
-            </div>
+          {/* Social Media Icons */}
+          <div className="flex items-start gap-3">
+            {[FacebookIcon, TwitterIcon, InstagramIcon, YoutubeIcon].map((Icon, index) => (
+              <div key={index} className="flex items-center justify-center w-6 h-6 bg-black rounded-full">
+                <Icon className="w-3.5 h-3.5 text-white" />
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Shop links */}
-        <div className="flex flex-col w-full md:w-[136px] items-start gap-5 relative">
-          <h4 className="relative w-fit [font-family:'DM_Sans',Helvetica] font-bold text-black text-xl tracking-[0] leading-normal">
-            Shop
-          </h4>
-          <div className="flex flex-col items-start gap-3 relative w-full opacity-60">
+        {/* Shop Links */}
+        <div className="flex flex-col w-[136px] items-start gap-5">
+          <h4 className="font-sans font-bold text-black text-xl">Browse</h4>
+          <div className="flex flex-col items-start gap-3 w-full opacity-60">
             {shopLinks.map((link, index) => (
               <a
-                key={`shop-${index}`}
-                href="#"
-                className="font-normal text-base leading-[26px] relative w-fit [font-family:'DM_Sans',Helvetica] text-black tracking-[0] whitespace-nowrap hover:underline"
+                key={index}
+                href={link.href}
+                className="font-sans font-normal text-black text-base leading-[26px]"
               >
-                {link}
+                {link.name}
               </a>
             ))}
           </div>
         </div>
 
-        {/* Customer service links */}
-        <div className="flex flex-col w-full md:w-auto items-start gap-6 relative">
-          <h4 className="relative w-fit [font-family:'DM_Sans',Helvetica] font-bold text-black text-xl tracking-[0] leading-normal">
-            Customer service
-          </h4>
-          <div className="flex flex-col items-start gap-3 relative w-full opacity-60">
+        {/* Customer Service Links */}
+        <div className="flex flex-col items-start gap-6">
+          <h4 className="font-sans font-bold text-black text-xl">Customer service</h4>
+          <div className="flex flex-col items-start gap-3 w-full opacity-60">
             {customerServiceLinks.map((link, index) => (
               <a
-                key={`customer-${index}`}
-                href="#"
-                className="relative w-fit [font-family:'DM_Sans',Helvetica] font-normal text-black text-base tracking-[0] leading-[26px] whitespace-nowrap hover:underline"
-              >
-                {link}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Delivery links */}
-        <div className="flex flex-col w-full md:w-[136px] items-start gap-5 relative">
-          <h4 className="relative w-fit [font-family:'DM_Sans',Helvetica] font-bold text-black text-xl tracking-[0] leading-normal">
-            Delivery
-          </h4>
-          <div className="flex flex-col items-start gap-3 relative w-full opacity-60">
-            {deliveryLinks.map((link, index) => (
-              <a
-                key={`delivery-${index}`}
-                href="#"
-                className="relative w-fit [font-family:'DM_Sans',Helvetica] font-normal text-black text-base tracking-[0] leading-[26px] whitespace-nowrap hover:underline"
+                key={index}
+                href="/shop"
+                className="font-sans font-normal text-black text-base leading-[26px]"
               >
                 {link}
               </a>
@@ -164,16 +105,11 @@ export const FooterSection = (): JSX.Element => {
         </div>
       </div>
 
-      {/* Footer bottom */}
-      <div className="flex flex-col md:flex-row items-center justify-between relative w-full gap-4">
-        <div className="relative w-fit [font-family:'DM_Sans',Helvetica] font-normal text-[#00000099] text-sm tracking-[0] leading-[26px] whitespace-nowrap">
-          © Copyright f Store 2024. Design by Figma.guru
+      {/* Copyright */}
+      <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4">
+        <div className="font-sans font-normal text-[#00000099] text-sm leading-[26px]">
+          © Copyright Sales 2025.
         </div>
-        <img
-          className="relative w-[263px] h-[25px]"
-          alt="Payment icons"
-          src="/payment-icons-1.svg"
-        />
       </div>
     </footer>
   );

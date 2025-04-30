@@ -4,7 +4,7 @@ import { HeroSection } from "./sections/HeroSection";
 import { MainHeaderSection } from "./sections/MainHeaderSection/MainHeaderSection";
 import { ProductCategoriesSection } from "./sections/ProductCategoriesSection";
 import { ProductFiltersSection } from "./sections/ProductFiltersSection/ProductFiltersSection";
-import { SiteFooterSection } from "./sections/SiteFooterSection";
+import { FooterSection } from "./sections/FooterSection/FooterSection";
 
 export const Shop = (): JSX.Element => {
   return (
@@ -25,7 +25,7 @@ export const Shop = (): JSX.Element => {
       <FeaturedItemsSection />
 
       {/* Footer */}
-      <SiteFooterSection />
+      <FooterSection />
     </div>
   );
 };
