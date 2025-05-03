@@ -37,8 +37,8 @@ export const HeaderSection = (): JSX.Element => {
   return (
     <header className="flex flex-col w-full">
       {/* Promotional banner */}
-      <div className="w-full bg-[#947458] py-2.5 flex justify-center">
-        <div className="font-sans text-sm text-white">
+      <div className="w-full bg-red-600 py-2.5 flex justify-center">
+      <div className="font-sans text-sm text-white">
           <span>Choose </span>
           <span className="font-bold">Sales </span>
           <span>for the best offers out there</span>
@@ -93,14 +93,14 @@ export const HeaderSection = (): JSX.Element => {
       {/* Main navigation */}
       <div className="w-full py-10 flex justify-between items-center px-4 md:px-8 lg:px-16 xl:px-[312px]">
         {/* Logo */}
-        <div className="flex items-center gap-2 w-40">
-          <div className="relative w-10 h-10">
-            <img
-              className="absolute w-[300px] h-12 top-0 left-0.5"
-              alt="Logo"
-              src="/Logo1BG.png"
-            />
-          </div>
+        <div className="flex items-center w-[220px] h-auto">
+                  <Link to="/home">
+                    <img
+                      className="w-[200px] h-auto object-contain"
+                      alt="Logo"
+                      src="/Logo1BG.png"
+                    />
+            </Link>
         </div>
 
         {/* Navigation links */}

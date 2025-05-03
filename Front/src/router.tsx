@@ -3,6 +3,8 @@ import { HomePage } from "./screens/HomePage";
 import { Shop } from "./screens/Shop";
 import { AboutUs } from "./screens/AboutUs/AboutUs";
 import { ContactUs } from "./screens/ContactUs";
+import { SignUp } from "./screens/SignUp";
+import { LogIn } from "./screens/LogIn";
 
 export const router = createBrowserRouter([
   {
@@ -24,5 +26,13 @@ export const router = createBrowserRouter([
   {
     path: "/about",
     element: <AboutUs />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/login",
+    element: <LogIn />,
   },
 ]);
