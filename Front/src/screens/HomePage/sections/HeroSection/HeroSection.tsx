@@ -1,50 +1,63 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge } from "../../../../components/ui/badge";
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent } from "../../../../components/ui/card";
 
 export const HeroSection = (): JSX.Element => {
-  // Product card data for mapping
+  const navigate = useNavigate();
+
   const productCards = [
-    { price: "$199", backgroundImage: "..//card.png" },
+    { price: "$199", backgroundImage: "/card.png" },
     {
       isPromo: true,
       title: "25% OFF",
       subtitle: "custom-made furniture",
+      backgroundImage: "/card-1.png",
     },
-    { price: "$99", backgroundImage: "..//card-1.png" },
-    { price: "$199", backgroundImage: "..//img-10.png" },
+    { price: "$99", backgroundImage: "/card-1.png" },
+    { price: "$199", backgroundImage: "/img-10.png" },
   ];
 
   return (
-    <section className="flex items-center gap-16 py-36 px-16 md:px-24 lg:px-32 relative w-full [background:linear-gradient(0deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.4)_100%),url(..//hero.png)_50%_50%_/_cover]">
+    <section
+      className="flex items-center gap-16 py-36 px-16 md:px-24 lg:px-32 relative w-full bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(/bgred.jpg)",
+      }}
+    >
       <div className="flex flex-col w-full lg:w-[636px] items-start gap-20">
         <div className="flex flex-col items-start gap-10 w-full">
           <Badge className="bg-[#ffffff1a] hover:bg-[#ffffff30] text-white rounded-none px-4 py-3">
-            <span className="font-bold text-base tracking-[0.80px] font-['DM_Sans',Helvetica]">
+            <span className="font-bold text-base tracking-[0.80px]">
               Offers
             </span>
           </Badge>
 
-          <h1 className="text-white text-[70px] font-bold leading-[80px] font-['DM_Sans',Helvetica]">
-            Sales <br />
+          <h1 className="text-white text-[70px] font-bold leading-[80px]">
+            <span className="text-red-500">Sales.tn</span>
+            <br />
             The best out there
           </h1>
 
-          <p className="text-[#ffffffcc] text-base leading-7 max-w-[550px] font-['DM_Sans',Helvetica]">
-            Mi tristique est nunc sapien orci tortor ac. Suspendisse leo et
-            cursus pharetra tellus tincidunt.
+          <p className="text-[#ffffffcc] text-base leading-7 max-w-[550px]">
+            Here where you can find the best offers out there in all of Tunisia.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <Button className="w-[180px] h-[60px] bg-[#947357] hover:bg-[#7d6249] rounded-none text-lg font-bold font-['DM_Sans',Helvetica]">
+          <Button
+            onClick={() => navigate("/shop")}
+            className="w-[180px] h-[60px] bg-red-600 hover:bg-red-500 rounded-none text-lg font-bold"
+          >
             Shop now
           </Button>
 
           <Button
+            onClick={() => navigate("/about")}
             variant="outline"
-            className="w-[180px] h-[60px] border-white text-white hover:bg-white/10 rounded-none text-lg font-medium font-['DM_Sans',Helvetica]"
+            className="w-[180px] h-[60px] border-red-400 text-red-400 hover:border-red-500 hover:text-red-500 hover:bg-red-500/10 rounded-none text-lg font-medium"
           >
             Learn more
           </Button>
@@ -57,24 +70,35 @@ export const HeroSection = (): JSX.Element => {
             key={index}
             className={`w-[212px] h-[212px] rounded-none ${
               card.isPromo
-                ? "bg-[#947458]"
-                : `[background:url(${card.backgroundImage})_50%_50%_/_cover,linear-gradient(0deg,rgba(246,244,242,1)_0%,rgba(246,244,242,1)_100%)]`
+                ? "bg-red-600"
+                : ""
             }`}
+            style={
+              card.backgroundImage && !card.isPromo
+                ? {
+                    backgroundImage: `url(${card.backgroundImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }
+                : {}
+            }
           >
             <CardContent
-              className={`p-4 h-full ${card.isPromo ? "flex flex-col items-center justify-center" : ""}`}
+              className={`p-4 h-full ${
+                card.isPromo ? "flex flex-col items-center justify-center" : ""
+              }`}
             >
               {card.isPromo ? (
                 <div className="flex flex-col items-center justify-center gap-5 w-full">
-                  <h3 className="font-bold text-[33px] text-defaultwhite text-center font-['DM_Sans',Helvetica]">
+                  <h3 className="font-bold text-[33px] text-white text-center">
                     {card.title}
                   </h3>
-                  <p className="font-medium text-lg text-defaultwhite text-center font-['DM_Sans',Helvetica]">
+                  <p className="font-medium text-lg text-white text-center">
                     {card.subtitle}
                   </p>
                 </div>
               ) : (
-                <span className="font-medium text-xl text-[#947458] font-['Ubuntu',Helvetica]">
+                <span className="font-medium text-xl text-[#947458]">
                   {card.price}
                 </span>
               )}

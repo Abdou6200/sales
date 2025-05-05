@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Checkbox } from "../../components/ui/checkbox";
 import { Input } from "../../components/ui/input";
@@ -7,10 +7,40 @@ import { Label } from "../../components/ui/label";
 import { Separator } from "../../components/ui/separator";
 
 export const LogIn = (): JSX.Element => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const onLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/login/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Login failed: ${errorData.message || "Unknown error"}`);
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Login successful:", data);
+
+      // Optional: Save token to localStorage/sessionStorage
+      // localStorage.setItem("token", data.token);
+
+      navigate("/home");
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("An error occurred while logging in.");
+    }
+  };
+
   return (
     <div className="bg-white flex justify-center w-screen h-screen overflow-hidden">
       <div className="relative w-full max-w-[1366px] h-full">
-        {/* Logo with link to /home */}
         <Link to="/home">
           <img
             className="absolute w-[200px] h-auto top-10 left-[100px] object-contain cursor-pointer"
@@ -19,10 +49,8 @@ export const LogIn = (): JSX.Element => {
           />
         </Link>
 
-        {/* Login Form Section */}
         <div className="absolute w-[400px] top-[180px] left-[100px]">
           <div className="flex flex-col h-full gap-5">
-            {/* Welcome Text */}
             <div>
               <h1 className="font-medium text-[32px] text-black mb-1 font-['Poppins',Helvetica]">
                 Welcome back!
@@ -34,12 +62,15 @@ export const LogIn = (): JSX.Element => {
 
             {/* Email Field */}
             <div className="space-y-1.5 mt-5">
-            <label htmlFor="email" className="font-medium text-sm font-['Poppins',Helvetica]">
-              Email address
-            </label>
+              <label htmlFor="email" className="font-medium text-sm font-['Poppins',Helvetica]">
+                Email address
+              </label>
               <Input
                 id="email"
+                type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="h-9 rounded-[10px] border-[#d9d9d9] pl-3 text-sm font-['Poppins',Helvetica]"
               />
             </div>
@@ -58,6 +89,8 @@ export const LogIn = (): JSX.Element => {
                 id="password"
                 type="password"
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="h-9 rounded-[10px] border-[#d9d9d9] pl-3 text-sm font-['Poppins',Helvetica]"
               />
             </div>
@@ -70,8 +103,11 @@ export const LogIn = (): JSX.Element => {
               </label>
             </div>
 
-            {/* Login Button - Now Red */}
-            <Button className="w-full h-9 bg-red-600 hover:bg-red-700 text-white rounded-[10px] mt-2">
+            {/* Login Button */}
+            <Button
+              onClick={onLogin}
+              className="w-full h-9 bg-red-600 hover:bg-red-700 text-white rounded-[10px] mt-2"
+            >
               <span className="font-bold text-sm font-['Poppins',Helvetica]">Login</span>
             </Button>
 
@@ -83,7 +119,7 @@ export const LogIn = (): JSX.Element => {
               </div>
             </div>
 
-            {/* Google Login - Centered */}
+            {/* Google Sign In */}
             <div className="flex justify-center">
               <Button
                 variant="outline"
@@ -96,7 +132,7 @@ export const LogIn = (): JSX.Element => {
               </Button>
             </div>
 
-            {/* Sign Up Text with link to /signup */}
+            {/* Sign Up Link */}
             <div className="text-center mt-4">
               <p className="font-medium text-sm font-['Poppins',Helvetica]">
                 Don’t have an account?{" "}
@@ -108,7 +144,7 @@ export const LogIn = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Right Side Image */}
+        {/* Side Image */}
         <img
           className="absolute w-[700px] h-full top-0 right-0 object-cover"
           alt="Chris lee"

@@ -1,12 +1,10 @@
 import {
   ChevronDownIcon,
-  HeartIcon,
   PhoneCallIcon,
   SearchIcon,
-  UserIcon,
 } from "lucide-react";
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../../../components/ui/button";
 import {
   DropdownMenu,
@@ -24,8 +22,8 @@ import {
 
 export const HeaderSection = (): JSX.Element => {
   const location = useLocation();
-  
-  // Navigation menu items data
+  const navigate = useNavigate();
+
   const navItems = [
     { name: "Home", path: "/home" },
     { name: "Shop", path: "/shop" },
@@ -33,26 +31,25 @@ export const HeaderSection = (): JSX.Element => {
     { name: "Contact Us", path: "/contact" },
   ];
 
-
   return (
     <header className="flex flex-col w-full">
-      {/* Promotional banner */}
+      {/* Top promotional banner */}
       <div className="w-full bg-red-600 py-2.5 flex justify-center">
-      <div className="font-sans text-sm text-white">
+        <div className="font-sans text-sm text-white">
           <span>Choose </span>
           <span className="font-bold">Sales </span>
           <span>for the best offers out there</span>
         </div>
       </div>
 
-      {/* Secondary header with address, search and phone */}
+      {/* Address, search, and phone section */}
       <div className="w-full bg-[#f6f4f2] py-5 px-4 md:px-8 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Address */}
         <div className="font-sans font-medium text-sm">
-        Av. de Yasser Arafat, Sousse 4051
+          Av. de Yasser Arafat, Sousse 4051
         </div>
 
-        {/* SearchIcon bar */}
+        {/* Search bar */}
         <div className="flex w-full md:w-[462px] h-[42px] bg-white border border-[#dee2e6]">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -83,56 +80,69 @@ export const HeaderSection = (): JSX.Element => {
           </Button>
         </div>
 
-        {/* Phone number */}
+        {/* Phone */}
         <div className="flex items-center gap-3 justify-end">
           <PhoneCallIcon className="h-6 w-6" />
-          <span className="font-sans font-medium text-sm">(+216) 58 084 275</span>
+          <span className="font-sans font-medium text-sm">
+            (+216) 58 084 275
+          </span>
         </div>
       </div>
 
-      {/* Main navigation */}
-      <div className="w-full py-10 flex justify-between items-center px-4 md:px-8 lg:px-16 xl:px-[312px]">
-        {/* Logo */}
-        <div className="flex items-center w-[220px] h-auto">
-                  <Link to="/home">
-                    <img
-                      className="w-[200px] h-auto object-contain"
-                      alt="Logo"
-                      src="/Logo1BG.png"
-                    />
+      {/* Main navigation row */}
+      <div className="w-full py-10 px-4 md:px-8 lg:px-16 xl:px-[312px]">
+        <div className="flex flex-col md:flex-row justify-between items-center w-full gap-6 md:gap-0">
+          {/* Left: Logo */}
+          <div className="flex items-center w-[220px] h-auto justify-start">
+            <Link to="/home">
+              <img
+                className="w-[200px] h-auto object-contain"
+                alt="Logo"
+                src="/Logo1BG.png"
+              />
             </Link>
-        </div>
+          </div>
 
-        {/* Navigation links */}
-        <NavigationMenu>
-          <NavigationMenuList className="flex gap-5">
-            {navItems.map((item) => {
-              // Check if the current path matches the nav item path
-              const isActive = location.pathname === item.path;
-              return (
-                <NavigationMenuItem key={item.name}>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to={item.path}
-                      className={`px-3 py-1 text-lg font-sans text-defaultblack ${isActive ? "font-bold" : "font-normal"}`}
-                    >
-                      {item.name}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
-        </NavigationMenu>
+          {/* Center: Navigation */}
+          <NavigationMenu>
+            <NavigationMenuList className="flex gap-5">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <NavigationMenuItem key={item.name}>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        to={item.path}
+                        className={`px-3 py-1 text-lg font-sans text-defaultblack ${
+                          isActive ? "font-bold" : "font-normal"
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuItem>
+                );
+              })}
+            </NavigationMenuList>
+          </NavigationMenu>
 
-        {/* UserIcon actions */}
-        <div className="flex items-center gap-5">
-          <Button variant="ghost" className="p-0 h-auto">
-            <UserIcon className="h-6 w-6" />
-          </Button>
-          <Button variant="ghost" className="p-0 h-auto">
-            <HeartIcon className="h-6 w-6" />
-          </Button>
+          {/* Right: Login & Signup */}
+          <div className="flex items-center gap-3 justify-end">
+            <Button
+              variant="outline"
+              onClick={() => navigate("/login")}
+              className="px-5 py-2 text-sm font-sans border-red-400 text-red-400 hover:border-red-500 hover:text-red-500 hover:bg-red-500/10"
+          
+            >
+              Login
+            </Button>
+            <Button
+              onClick={() => navigate("/signup")}
+              className="px-5 py-2 text-sm font-sans bg-red-600 hover:bg-red-500 text-white"
+            >
+              Signup
+            </Button>
+          </div>
         </div>
       </div>
     </header>

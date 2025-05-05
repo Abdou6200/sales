@@ -5,8 +5,7 @@ import {
   YoutubeIcon,
 } from "lucide-react";
 import React from "react";
-import { Button } from "../../../../components/ui/button";
-import { Input } from "../../../../components/ui/input";
+
 
 export const FooterSection = (): JSX.Element => {
   // Shop links with proper hrefs
@@ -30,15 +29,13 @@ export const FooterSection = (): JSX.Element => {
       <div className="flex flex-col md:flex-row items-start justify-between w-full gap-10 md:gap-4">
         {/* Company Info */}
         <div className="flex flex-col items-start gap-5">
-          <div className="flex items-center gap-2">
-            <div className="relative w-10 h-10">
-              <img
-                className="absolute w-[100px] h-9 top-0 left-0.5"
-                alt="Cabinet"
-                src="/Logo1BG.png"
-              />
-            </div>
-          </div>
+        <div className="w-[180px]">
+  <img
+    src="/Logo1BG.png"
+    alt="Sales.tn Logo"
+    className="w-full h-auto object-contain"
+  />
+</div>
 
           <div className="font-sans font-medium text-[#00000099] text-sm">
             Av. de Yasser Arafat, Sousse 4051

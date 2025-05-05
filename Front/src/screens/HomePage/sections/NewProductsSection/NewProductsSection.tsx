@@ -3,7 +3,7 @@ import { Card, CardContent } from "../../../../components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "../../../../components/ui/tabs";
 
 // Product data for mapping
-const categories = ["All", "Chairs", "Tables", "Armchairs", "Sofas", "Decor"];
+const categories = ["Trending", "Food", "Decor", "Make Up", "Jewelery"];
 
 const products = [
   {
@@ -35,7 +35,7 @@ export const NewProductsSection = (): JSX.Element => {
     <section className="flex flex-col items-center gap-[60px] px-6 py-[120px] w-full bg-[#f8f9fa]">
       <div className="flex flex-col items-center gap-10">
         <h2 className="font-bold text-[50px] text-defaultblack [font-family:'DM_Sans',Helvetica]">
-          New Products
+          Categories
         </h2>
 
         <Tabs defaultValue="All" className="w-full">

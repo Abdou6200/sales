@@ -85,7 +85,7 @@ export const ContactFormSection = (): JSX.Element => {
   return (
     <section className="flex flex-col items-center relative">
       {/* Background image */}
-      <div className="relative w-full h-[486px] bg-[url(/img.png)] bg-cover bg-center" />
+      <div className="relative w-full h-[486px] bg-[url(/contactus.png)] bg-cover bg-center" />
 
       {/* Contact form container */}
       <Card className="flex w-full max-w-[1296px] items-start justify-between p-[60px] relative mt-[-200px] bg-[#f6f4f2] rounded-none shadow-none">
@@ -193,7 +193,7 @@ export const ContactFormSection = (): JSX.Element => {
               </div>
 
               {/* Submit button */}
-              <Button className="w-[200px] h-[50px] bg-[#947458] hover:bg-[#7d6249] rounded-none font-['DM_Sans',Helvetica] font-medium text-xl text-white" onClick={handleSubmit} disabled={isSubmitting}>
+              <Button className="w-[200px] h-[50px] bg-red-600 hover:bg-red-500 rounded-none font-['DM_Sans',Helvetica] font-medium text-xl text-white" onClick={handleSubmit} disabled={isSubmitting}>
                 {isSubmitting ? 'Sending...' : 'Send message'}
               </Button>
             </CardContent>

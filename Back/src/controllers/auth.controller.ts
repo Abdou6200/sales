@@ -9,8 +9,8 @@ import {
 } from '../core/ApiResponse';
 
 export const loginUser = asyncHandler(async (req: Request, res: Response) => {
-  const { phoneNumber, password } = req.body;
-  const result = await authService.loginUser({ phoneNumber, password });
+  const { email, password } = req.body;
+  const result = await authService.loginUser({ email, password });
   new SuccessResponse('Login Success', result).send(res);
 });
 

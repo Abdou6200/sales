@@ -1,99 +1,99 @@
-import { ArrowRightIcon } from "lucide-react";
 import React from "react";
-import { Card, CardContent } from "../../../../components/ui/card";
+import { useNavigate } from "react-router-dom";
 
-export const GallerySection = (): JSX.Element => {
-  // Gallery data for mapping
-  const galleryItems = [
-    {
-      id: 1,
-      title: "Bedroom",
-      image: "..//img-label-1.png",
-      className: "col-span-2 h-[306px]",
-    },
-    {
-      id: 2,
-      title: "Living room",
-      image: "..//img-label-2.png",
-      className: "h-[306px]",
-    },
-    {
-      id: 3,
-      title: "Hallway",
-      image: "..//img-label-3.png",
-      className: "h-[306px]",
-    },
-    {
-      id: 4,
-      title: "Kitchen",
-      image: "..//img-label.png",
-      className: "row-span-2 h-[636px]",
-    },
-  ];
+const cashbackOffers = [
+  {
+    name: "Airbnb",
+    cashback: "3,6%",
+    note: "Promo Code available only online",
+    logo: "airbnb.png",
+  },
+  {
+    name: "Carrefour",
+    cashback: "5,6%",
+    note: "Promo Code available online and in shop",
+    logo: "Carrefour.png",
+  },
+  {
+    name: "HM",
+    cashback: "3,3%",
+    note: "Promo Code available online and in shop",
+    logo: "hm.png",
+  },
+  {
+    name: "Chaneb",
+    cashback: "3%",
+    note: "Promo Code available only in shop",
+    logo: "chaneb.png",
+  },
+  {
+    name: "Spotify",
+    cashback: "10%",
+    note: "Promo Code available only online",
+    logo: "Spotify.png",
+  },
+  {
+    name: "Netflix",
+    cashback: "6%",
+    note: "Promo Code available only online",
+    logo: "netflix.png",
+  },
+];
+
+export const GallerySection = () => {
+  const navigate = useNavigate();
 
   return (
-    <section className="py-[120px] px-6 md:px-12 lg:px-24 xl:px-[312px] w-full">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 flex flex-col gap-6">
-          {/* First row - Bedroom */}
-          <Card className="rounded-none border-0 overflow-hidden p-0">
-            <CardContent className="p-0 relative">
-              <div
-                className="w-full h-[306px] bg-cover bg-center"
-                style={{ backgroundImage: `url(${galleryItems[0].image})` }}
-              >
-                <div className="absolute bottom-0 left-0 inline-flex items-center gap-3 px-4 py-[13px] bg-[#00000080]">
-                  <span className="font-bold text-white text-2xl leading-5 font-sans">
-                    {galleryItems[0].title}
-                  </span>
-                  <ArrowRightIcon className="w-6 h-6 text-white" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+    <section className="w-full bg-[#f7f7f7] py-16">
+      <div className="w-full px-4 md:px-8 xl:px-20">
+        <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center text-[#121212]">
+          Our selection of Promo Codes
+        </h2>
 
-          {/* Second row - Living room and Hallway */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {galleryItems.slice(1, 3).map((item) => (
-              <Card
-                key={item.id}
-                className="rounded-none border-0 overflow-hidden p-0"
-              >
-                <CardContent className="p-0 relative">
-                  <div
-                    className="w-full h-[306px] bg-cover bg-center"
-                    style={{ backgroundImage: `url(${item.image})` }}
-                  >
-                    <div className="absolute bottom-0 left-0 inline-flex items-center gap-3 px-4 py-[13px] bg-[#00000080]">
-                      <span className="font-bold text-white text-2xl leading-5 font-sans">
-                        {item.title}
-                      </span>
-                      <ArrowRightIcon className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Kitchen - tall image on right */}
-        <Card className="rounded-none border-0 overflow-hidden p-0">
-          <CardContent className="p-0 relative">
-            <div
-              className="w-full h-[636px] bg-cover bg-center"
-              style={{ backgroundImage: `url(${galleryItems[3].image})` }}
-            >
-              <div className="absolute bottom-0 left-0 inline-flex items-center gap-3 px-4 py-[13px] bg-[#00000080]">
-                <span className="font-bold text-white text-2xl leading-5 font-sans">
-                  {galleryItems[3].title}
-                </span>
-                <ArrowRightIcon className="w-6 h-6 text-white" />
-              </div>
+        <div className="w-full grid grid-cols-1 xl:grid-cols-[400px_repeat(3,_1fr)] gap-6">
+          {/* Promo block */}
+          <div className="row-span-2 bg-gradient-to-br from-black to-[#001f3f] text-white p-6 rounded-xl flex flex-col justify-between">
+            <div>
+              <h3 className="text-2xl font-bold leading-tight mb-3">
+                These are the best offers <br /> in our opinion!
+              </h3>
+              <p className="text-sm text-gray-200 mb-4">
+                More than 52 partner are available: Carrefour, Airbnb, Chaneb, ...
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <button
+              onClick={() => navigate("/shop")}
+              className="bg-orange-500 text-white px-4 py-2 rounded-full font-semibold w-fit"
+            >
+              All Promo Codes available
+            </button>
+          </div>
+
+          {/* Offer cards */}
+          {cashbackOffers.map((offer, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-5 rounded-xl shadow text-center flex flex-col items-center justify-between"
+            >
+              <img
+                src={offer.logo}
+                alt={offer.name}
+                className="h-12 object-contain mb-4"
+              />
+              <p className="text-orange-600 text-lg font-bold mb-1">
+                {offer.cashback} of reduction
+              </p>
+              <p className="text-sm text-gray-500">{offer.note}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
+
+
+
+
+
+

@@ -1,56 +1,42 @@
 import React from "react";
-import { Card, CardContent } from "../../../../components/ui/card";
+
+const teamMembers = [
+  {
+    id: 1,
+    name: "Hassen Fnouni",
+    role: "Owner",
+    image: "/hassen.jpg",
+    fit: "contain", // 👈 Add this
+  },
+  {
+    id: 2,
+    name: "Abd Errahmen Ben Rhouma",
+    role: "Developer",
+    image: "/abdouu.jpg",
+    fit: "cover",
+  },
+];
 
 export const TeamSection = (): JSX.Element => {
-  // Team members data for mapping
-  const teamMembers = [
-    {
-      id: 1,
-      name: "Ian Dyer",
-      role: "Consultant",
-      image: "/img-11.svg",
-    },
-    {
-      id: 2,
-      name: "Brianna Fitzgerald",
-      role: "Manager",
-      image: "/img-12.svg",
-    },
-    {
-      id: 3,
-      name: "Heath Barry",
-      role: "Consultant",
-      image: "/img-13.svg",
-    },
-  ];
-
   return (
-    <section className="flex flex-col items-center gap-10 py-[60px] px-4 md:px-8 lg:px-16 xl:px-[312px]">
-      <header className="text-center">
-        <h2 className="font-bold text-[50px] text-defaultblack font-['DM_Sans',Helvetica] tracking-[0] leading-normal">
-          Our Team
-        </h2>
-      </header>
+    <section className="flex flex-col items-center gap-10 py-16 px-4 md:px-8 lg:px-16 xl:px-32">
+     <h2 className="text-4xl md:text-5xl font-bold text-center font-['DM_Sans'] text-[#E30613]">
+  Our Team
+</h2>
 
-      <div className="flex flex-wrap justify-center gap-6">
-        {teamMembers.map((member) => (
-          <Card
-            key={member.id}
-            className="border-none shadow-none w-full md:w-[416px]"
-          >
-            <div
-              className="w-full h-[480px] bg-cover bg-center"
-              style={{ backgroundImage: `url(${member.image})` }}
+      <div className="flex flex-wrap justify-center gap-8">
+        {teamMembers.map(({ id, name, role, image }) => (
+          <div key={id} className="flex flex-col items-center text-center w-full md:w-[300px]">
+            <img
+              src={image}
+              alt={name}
+              className="w-full h-[400px] object-cover rounded-lg"
             />
-            <CardContent className="flex flex-col items-center gap-6 pt-5">
-              <h3 className="font-['Ubuntu',Helvetica] font-bold text-2xl text-defaultblack tracking-[0] leading-5">
-                {member.name}
-              </h3>
-              <p className="font-['Ubuntu',Helvetica] font-normal text-xl text-[#00000080] tracking-[0] leading-5">
-                {member.role}
-              </p>
-            </CardContent>
-          </Card>
+            <h3 className="mt-4 text-2xl font-bold font-['Ubuntu'] text-black">
+              {name}
+            </h3>
+            <p className="text-xl text-black/50 font-['Ubuntu']">{role}</p>
+          </div>
         ))}
       </div>
     </section>

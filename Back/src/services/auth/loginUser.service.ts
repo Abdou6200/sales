@@ -13,16 +13,16 @@ import RoleRepo from '../../database/repository/RoleRepo';
 import { RoleCode } from '../../database/model/Role';
 
 interface LoginParams {
-  phoneNumber: string;
+  email: string;
   password: string;
 }
 
-export const loginUser = async ({ phoneNumber, password }: LoginParams) => {
+export const loginUser = async ({ email, password }: LoginParams) => {
   const roleUser = await RoleRepo.findByCode(RoleCode.USER);
   if (!roleUser) throw new NotFoundError('admin role not found');
 
   const user = await UserRepo.findByObjFull({
-    phoneNumber,
+    email,
     role: roleUser!.id,
   });
 
