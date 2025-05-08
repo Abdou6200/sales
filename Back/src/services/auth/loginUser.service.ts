@@ -11,6 +11,7 @@ import { generateKeys } from '../../helpers/utils/auth';
 import { omit } from 'lodash';
 import RoleRepo from '../../database/repository/RoleRepo';
 import { RoleCode } from '../../database/model/Role';
+import { log } from 'console';
 
 interface LoginParams {
   email: string;
@@ -20,6 +21,7 @@ interface LoginParams {
 export const loginUser = async ({ email, password }: LoginParams) => {
   const roleUser = await RoleRepo.findByCode(RoleCode.USER);
   if (!roleUser) throw new NotFoundError('admin role not found');
+console.log(email,password);
 
   const user = await UserRepo.findByObjFull({
     email,
@@ -27,6 +29,7 @@ export const loginUser = async ({ email, password }: LoginParams) => {
   });
 
   if (!user) throw new BadRequestError('User not registered');
+console.log(user);
 
   const match = await bcryptjs.compare(password, user.password);
   if (!match) throw new AuthFailureError('Authentication failure');

@@ -12,6 +12,7 @@ export default interface IUser extends Document {
   email: string;
   password: string;
   phoneNumber: string;
+  age: number;
   avatar: string;
   verified: boolean;
   registerConfirmationCode: number | null;
@@ -42,6 +43,9 @@ const schema = new Schema<IUser>(
       trim: true,
       unique: true,
       sparse: true,
+    },
+    age: {
+      type: Schema.Types.Number,
     },
     avatar: {
       type: Schema.Types.String,

@@ -13,7 +13,7 @@ export const LogIn = (): JSX.Element => {
 
   const onLogin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/login/user", {
+      const response = await fetch("http://localhost:3000/api/auth/login/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -26,10 +26,8 @@ export const LogIn = (): JSX.Element => {
       }
 
       const data = await response.json();
-      console.log("Login successful:", data);
-
-      // Optional: Save token to localStorage/sessionStorage
-      // localStorage.setItem("token", data.token);
+      
+      localStorage.setItem("token", data.data.tokens.accessToken);
 
       navigate("/home");
     } catch (error) {

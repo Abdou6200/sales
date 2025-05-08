@@ -1,4 +1,6 @@
 import Joi from '@hapi/joi';
+import { email } from 'configVars';
+import { name } from 'ejs';
 
 export default {
   loginAdmin: Joi.object().keys({
@@ -7,7 +9,7 @@ export default {
   }),
 
   loginUser: Joi.object().keys({
-    phoneNumber: Joi.string().required(),
+    email: Joi.string().email().required(),
     password: Joi.string().required().required(),
   }),
 
@@ -15,8 +17,15 @@ export default {
     refreshToken: Joi.string().required().min(1),
   }),
 
-  registerPhone: Joi.object().keys({
-    phoneNumber: Joi.string().required(),
+  registerUser: Joi.object().keys({
+    userName: Joi.string().min(3).max(200).required(),
+    email: Joi.string().email().required(),
+    age: Joi.number().required(),
+    phoneNumber: Joi.string()
+        .pattern(/^(2[0-9]{7}|9[0-9]{7}|4[0-9]{7}|5[0-9]{7}|7[0-9]{7})$/,
+          'numbers')
+        .required(),
+    password: Joi.string().min(5).max(30).required(),
   }),
 
   forgetPhone: Joi.object().keys({

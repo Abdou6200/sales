@@ -5,6 +5,7 @@ import { AboutUs } from "./screens/AboutUs/AboutUs";
 import { ContactUs } from "./screens/ContactUs";
 import { SignUp } from "./screens/SignUp";
 import { LogIn } from "./screens/LogIn";
+import { AdminUserTable } from "./screens/AdminUserTable";
 
 export const router = createBrowserRouter([
   {
@@ -34,5 +35,9 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <LogIn />,
+  },
+  {
+    path: "/admin",
+    element: <AdminUserTable />,
   },
 ]);

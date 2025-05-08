@@ -19,16 +19,16 @@ router.post(
 );
 
 router.post(
-  '/register',
-  validator(schema.registerPhone),
-  authController.registerPhone
+  '/signup',
+  validator(schema.registerUser),
+  authController.registerUser
 );
 
-router.post(
+/*router.post(
   '/register/resend',
   validator(schema.registerPhone),
   authController.resendRegisterPhone
-);
+);*/
 
 router.post(
   '/register/verify',

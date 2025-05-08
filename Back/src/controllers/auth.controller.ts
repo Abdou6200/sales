@@ -7,6 +7,7 @@ import {
   SuccessResponse,
   TokenRefreshResponse,
 } from '../core/ApiResponse';
+import { email } from 'configVars';
 
 export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -39,10 +40,10 @@ export const refreshToken = asyncHandler(
   }
 );
 
-export const registerPhone = asyncHandler(
+export const registerUser = asyncHandler(
   async (req: ProtectedRequest, res: Response) => {
-    const { phoneNumber } = req.body;
-    await authService.registerPhone(phoneNumber);
+    const {userName,email,age,phoneNumber,password } = req.body;
+    await authService.registerUser(userName, email, age, phoneNumber, password);
     new SuccessMsgResponse('Register success').send(res);
   }
 );

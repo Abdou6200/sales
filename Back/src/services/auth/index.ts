@@ -2,7 +2,7 @@ import { loginUser } from './loginUser.service';
 import { loginAdmin } from './loginAdmin.service';
 import { logout } from './logout.service';
 import { refreshToken } from './refreshToken.service';
-import { registerPhone } from './registerPhone';
+import { registerUser } from './registerUser';
 import { resendRegisterPhone } from './resendRegisterPhone';
 import { verifyCodeRegister } from './verifyCodeRegister';
 import { setCredentials } from './setCredentials';
@@ -16,7 +16,7 @@ export default {
   loginAdmin,
   logout,
   refreshToken,
-  registerPhone,
+  registerUser,
   resendRegisterPhone,
   verifyCodeRegister,
   setCredentials,
