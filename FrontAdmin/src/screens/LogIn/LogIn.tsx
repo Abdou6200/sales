@@ -29,7 +29,7 @@ export const LogIn = (): JSX.Element => {
       
       localStorage.setItem("token", data.data.tokens.accessToken);
 
-      navigate("/home");
+      navigate("/admin");
     } catch (error) {
       console.error("Login error:", error);
       alert("An error occurred while logging in.");

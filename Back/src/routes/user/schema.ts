@@ -23,10 +23,11 @@ export default {
     userName: Joi.string().min(3).max(200),
     email: Joi.string().email(),
     password: Joi.string().min(8),
-    verified: Joi.boolean(),
     phoneNumber: Joi.string().pattern(
       /^(2[0-9]{7}|9[0-9]{7}|4[0-9]{7}|5[0-9]{7}|7[0-9]{7})$/,
       'numbers'
     ),
+    age: Joi.number().min(13),
+    avatar: Joi.string().uri().optional(),
   }),
 };

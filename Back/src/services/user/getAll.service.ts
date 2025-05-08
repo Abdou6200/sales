@@ -5,11 +5,11 @@ export const getAll = async (query: any) => {
 
   const options = {
     page: parseInt(page as string, 10) || 1,
-    limit: parseInt(perPage as string, 10) || 10,
+    limit: parseInt(perPage as string, 10) || 100,
   };
 
   const users = await UserRepo.findAll(options, query);
-
+  
   if (!users || !users.docs) {
     return {
       meta: {
