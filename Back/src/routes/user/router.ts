@@ -16,8 +16,8 @@ router
   .route('/')
   .post(
     authorization([RoleCode.ADMIN]),
-    fileUploadHandler.handleSingleFileUpload('avatar'),
     validator(schema.create),
+  //  fileUploadHandler.handleSingleFileUpload('avatar'),
     userController.create
   )
   .get(authorization([RoleCode.ADMIN, RoleCode.USER]), userController.getAll);

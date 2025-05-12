@@ -76,7 +76,7 @@ export const InfoSection = () => {
   return (
     <div className="bg-white rounded-lg shadow p-4 w-full">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">User List</h2>
+        <h2 className="text-xl font-semibold">Users List</h2>
         <button
           onClick={() => setShowModal(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"

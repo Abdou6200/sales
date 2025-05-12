@@ -29,7 +29,7 @@ export const LogIn = (): JSX.Element => {
       
       localStorage.setItem("token", data.data.tokens.accessToken);
 
-      navigate("/admin");
+      navigate("/users");
     } catch (error) {
       console.error("Login error:", error);
       alert("An error occurred while logging in.");
@@ -39,7 +39,7 @@ export const LogIn = (): JSX.Element => {
   return (
     <div className="bg-white flex justify-center w-screen h-screen overflow-hidden">
       <div className="relative w-full max-w-[1366px] h-full">
-        <Link to="/home">
+        <Link to="/">
           <img
             className="absolute w-[200px] h-auto top-10 left-[100px] object-contain cursor-pointer"
             alt="Logo"
@@ -54,7 +54,7 @@ export const LogIn = (): JSX.Element => {
                 Welcome back!
               </h1>
               <p className="font-medium text-base text-black font-['Poppins',Helvetica]">
-                Enter your credentials to access your account
+                Enter your credentials to access your admin account
               </p>
             </div>
 
@@ -79,9 +79,6 @@ export const LogIn = (): JSX.Element => {
                 <Label htmlFor="password" className="font-medium text-sm font-['Poppins',Helvetica]">
                   Password
                 </Label>
-                <span className="text-[10px] text-blue-600 cursor-pointer font-['Poppins',Helvetica]">
-                  Forgot password?
-                </span>
               </div>
               <Input
                 id="password"
@@ -108,37 +105,6 @@ export const LogIn = (): JSX.Element => {
             >
               <span className="font-bold text-sm font-['Poppins',Helvetica]">Login</span>
             </Button>
-
-            {/* Divider */}
-            <div className="my-6 relative flex items-center justify-center">
-              <Separator className="w-full" />
-              <div className="absolute bg-white px-2">
-                <span className="text-[10px] text-black font-medium font-['Poppins',Helvetica]">Or</span>
-              </div>
-            </div>
-
-            {/* Google Sign In */}
-            <div className="flex justify-center">
-              <Button
-                variant="outline"
-                className="w-[280px] h-9 py-1 px-5 rounded-[10px] border-[#d9d9d9] flex items-center justify-center"
-              >
-                <img src="/icons8-google-1.svg" alt="Google" className="w-5 h-5 mr-2" />
-                <span className="font-medium text-sm text-black font-['Poppins',Helvetica]">
-                  Sign in with Google
-                </span>
-              </Button>
-            </div>
-
-            {/* Sign Up Link */}
-            <div className="text-center mt-4">
-              <p className="font-medium text-sm font-['Poppins',Helvetica]">
-                Don’t have an account?{" "}
-                <Link to="/signup" className="text-[#0f3cde] cursor-pointer">
-                  Sign Up
-                </Link>
-              </p>
-            </div>
           </div>
         </div>
 

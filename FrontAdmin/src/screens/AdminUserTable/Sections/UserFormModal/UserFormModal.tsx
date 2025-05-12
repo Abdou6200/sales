@@ -1,4 +1,3 @@
-// ✅ UserFormModal.tsx
 import React, { useEffect, useState } from "react";
 import { Input } from "@components/ui/input";
 import { Button } from "@components/ui/button";
@@ -63,7 +62,7 @@ export const UserFormModal = ({ onClose, onSuccess, existingUser }: UserFormModa
     const token = localStorage.getItem("token");
     const url = existingUser
       ? `http://localhost:3000/api/users/${existingUser._id}`
-      : "http://localhost:3000/api/auth/signup";
+      : "http://localhost:3000/api/users";
     const method = existingUser ? "PUT" : "POST";
 
     try {
@@ -105,12 +104,11 @@ export const UserFormModal = ({ onClose, onSuccess, existingUser }: UserFormModa
           { label: "Phone Number", field: "phoneNumber" },
           { label: "Age", field: "age" },
           { label: "Avatar URL", field: "avatar" },
-          { label: "Password", field: "password" },
         ].map(({ label, field }) => (
           <div className="mb-3" key={field}>
             <label className="block text-sm font-medium mb-1">{label}</label>
             <Input
-              type={field === "password" ? "password" : field === "age" ? "number" : "text"}
+              type={field === "age" ? "number" : "text"}
               value={formData[field as keyof typeof formData]}
               onChange={(e) => handleChange(field, e.target.value)}
               placeholder={`Enter ${label.toLowerCase()}`}
@@ -118,6 +116,20 @@ export const UserFormModal = ({ onClose, onSuccess, existingUser }: UserFormModa
             {errors[field] && <p className="text-xs text-red-500">{errors[field]}</p>}
           </div>
         ))}
+
+        {/* Conditionally render the password field only if it's a new user */}
+        {!existingUser && (
+          <div className="mb-3">
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <Input
+              type="password"
+              value={formData.password}
+              onChange={(e) => handleChange("password", e.target.value)}
+              placeholder="Enter password"
+            />
+            {errors.password && <p className="text-xs text-red-500">{errors.password}</p>}
+          </div>
+        )}
 
         <div className="flex justify-end gap-2 mt-4">
           <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>

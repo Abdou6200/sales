@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AdminUserTable } from "./screens/AdminUserTable";
+import { AdminPartnerTable } from "./screens/AdminPartnerTable";
 import { LogIn } from "./screens/LogIn";
 
 export const router = createBrowserRouter([
@@ -8,7 +9,11 @@ export const router = createBrowserRouter([
     element: <LogIn />,
   },
   {
-    path: "/admin",
+    path: "/users",
     element: <AdminUserTable />,
+  },
+  {
+    path: "/partners",
+    element: <AdminPartnerTable />,
   },
 ]);

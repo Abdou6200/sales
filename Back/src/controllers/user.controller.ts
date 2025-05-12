@@ -7,10 +7,12 @@ import {
   SuccessResponse,
   SuccessResponsePaginate,
 } from '../core/ApiResponse';
+import { log } from 'console';
 
 export const create = asyncHandler(
   async (req: ProtectedRequest, res: Response) => {
     const { body, file } = req;
+    console.log(body)
     const result = await userService.create({ body, file });
     new SuccessResponse('User created', result).send(res);
   }

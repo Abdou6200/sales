@@ -10,19 +10,19 @@ export default {
     userName: Joi.string().min(3).max(200).required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(8).required(),
-    verified: Joi.boolean().required(),
     phoneNumber: Joi.string()
       .pattern(
         /^(2[0-9]{7}|9[0-9]{7}|4[0-9]{7}|5[0-9]{7}|7[0-9]{7})$/,
         'numbers'
       )
       .required(),
+    age: Joi.number().min(13),
+    avatar: Joi.string(),
   }),
 
   update: Joi.object().keys({
     userName: Joi.string().min(3).max(200),
     email: Joi.string().email(),
-    password: Joi.string().min(8),
     phoneNumber: Joi.string().pattern(
       /^(2[0-9]{7}|9[0-9]{7}|4[0-9]{7}|5[0-9]{7}|7[0-9]{7})$/,
       'numbers'

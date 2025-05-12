@@ -7,7 +7,7 @@ interface createParams {
 }
 
 export const create = async ({ body, file }: createParams) => {
-  if (file) body.avatar = file.path;
+ // if (file) body.avatar = file.path;
   const user = await UserRepo.create(body);
   if (!user) throw new BadRequestError('error creating user');
   return user;
