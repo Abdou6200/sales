@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AdminUserTable } from "./screens/AdminUserTable";
 import { AdminPartnerTable } from "./screens/AdminPartnerTable";
+import { AdminBonTable } from "./screens/AdminBonTable";
+import { AdminCodesTable } from "./screens/AdminCodesTable";
 import { LogIn } from "./screens/LogIn";
 
 export const router = createBrowserRouter([
@@ -15,5 +17,13 @@ export const router = createBrowserRouter([
   {
     path: "/partners",
     element: <AdminPartnerTable />,
+  },
+  {
+    path: "/bonreduction",
+    element: <AdminBonTable />,
+  },
+  {
+    path: "/codes",
+    element: <AdminCodesTable />,
   },
 ]);

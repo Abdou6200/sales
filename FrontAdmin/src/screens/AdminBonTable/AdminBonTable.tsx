@@ -3,7 +3,7 @@ import SideBar from "./Sections/SideBar/SideBar";
 import TopBar from "./Sections/TopBar/TopBar";
 import { InfoSection } from "./Sections/InfoSection/InfoSection";
 
-export const AdminUserTable = (): JSX.Element => {
+export const AdminBonTable = (): JSX.Element => {
   return (
     <div className="flex">
       <SideBar />

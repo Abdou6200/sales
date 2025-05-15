@@ -11,8 +11,8 @@ export default {
     code: Joi.string().min(3).max(200).required(),
     remise: Joi.string().min(3).max(200).required(),
     duree: Joi.date().required(),
-    picture: Joi.string().uri().required(),
     description: Joi.string().min(3).max(400).required(),
+    partner: JoiObjectId().required(),
   }),
 
   update: Joi.object().keys({
@@ -20,7 +20,7 @@ export default {
     code: Joi.string().min(3).max(200),
     remise: Joi.string().min(3).max(200),
     duree: Joi.date(),
-    picture: Joi.string().uri(),
     description: Joi.string().min(3).max(400),
+    partner: JoiObjectId(),
   }),
 };

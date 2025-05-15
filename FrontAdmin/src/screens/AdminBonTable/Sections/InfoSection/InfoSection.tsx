@@ -1,31 +1,28 @@
-// ✅ InfoSection.tsx
 import React, { useEffect, useState } from "react";
-import { UserFormModal } from "../UserFormModal/UserFormModal";
+import { BonFormModal } from "../BonFormModal/BonFormModal";
 
-interface User {
+interface BonReduction {
   _id: string;
-  userName: string;
-  email: string;
-  phoneNumber: string;
-  avatar: string;
-  verified: boolean;
-  role: string;
+  title: string;
+  code: string;
+  remise: string;
+  duree: string; // assuming it's a date string
+  picture: string;
+  description: string;
   createdAt: string;
-  updatedAt: string;
-  age: number;
 }
 
 export const InfoSection = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [bons, setBons] = useState<BonReduction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editingBon, setEditingBon] = useState<BonReduction | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  const fetchUsers = () => {
+  const fetchBons = () => {
     const token = localStorage.getItem("token");
-    fetch("http://localhost:3000/api/users?page=1&perPage=100", {
+    fetch("http://localhost:3000/api/bonreduction?page=1&perPage=100", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -33,34 +30,34 @@ export const InfoSection = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUsers(data.docs || []);
+        setBons(data.docs || []);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching bons:", error);
         setLoading(false);
       });
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchBons();
   }, []);
 
-  const handleDelete = async (userId: string) => {
+  const handleDelete = async (bonId: string) => {
     const token = localStorage.getItem("token");
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    if (!window.confirm("Are you sure you want to delete this bon de réduction?")) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/api/users/${userId}`, {
+      const res = await fetch(`http://localhost:3000/api/bonreduction/${bonId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.ok) {
-        setUsers((prev) => prev.filter((user) => user._id !== userId));
+        setBons((prev) => prev.filter((bon) => bon._id !== bonId));
       } else {
         const data = await res.json();
-        alert(data.message || "Failed to delete user");
+        alert(data.message || "Failed to delete");
       }
     } catch (error) {
       console.error("Delete error:", error);
@@ -70,13 +67,13 @@ export const InfoSection = () => {
 
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
-  const currentUsers = users.slice(indexOfFirst, indexOfLast);
-  const totalPages = Math.ceil(users.length / itemsPerPage);
+  const currentBons = bons.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(bons.length / itemsPerPage);
 
   return (
     <div className="bg-white rounded-lg shadow p-4 w-full">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">User List</h2>
+        <h2 className="text-xl font-semibold">Bons de Réduction</h2>
         <button
           onClick={() => setShowModal(true)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
@@ -86,50 +83,48 @@ export const InfoSection = () => {
       </div>
 
       {loading ? (
-        <p className="text-gray-500 text-center">Loading users...</p>
+        <p className="text-gray-500 text-center">Loading bons...</p>
       ) : (
         <>
           <table className="min-w-full text-left text-sm">
             <thead className="border-b font-medium text-gray-700">
               <tr>
-                <th className="p-3">Avatar</th>
-                <th className="p-3">Name</th>
-                <th className="p-3">Email</th>
-                <th className="p-3">Phone</th>
-                <th className="p-3">Age</th>
-                <th className="p-3">Created At</th>
+                <th className="p-3">Image</th>
+                <th className="p-3">Title</th>
+                <th className="p-3">Code</th>
+                <th className="p-3">Remise</th>
+                <th className="p-3">Valid Until</th>
+                <th className="p-3">Description</th>
                 <th className="p-3">Action</th>
               </tr>
             </thead>
             <tbody>
-              {currentUsers.map((user) => (
-                <tr key={user._id} className="border-b hover:bg-gray-50">
+              {currentBons.map((bon) => (
+                <tr key={bon._id} className="border-b hover:bg-gray-50">
                   <td className="p-3">
-                  <img
-                    src={
-                      user.avatar.startsWith("http")
-                        ? user.avatar
-                        : `http://localhost:3000/${user.avatar}`
-                    }
-                    alt={user.userName}
-                    className="w-10 h-10 rounded-full"
-                  />
+                    <img
+                      src={bon.picture.startsWith("http")
+                        ? bon.picture
+                        : `http://localhost:3000/${bon.picture}`}
+                      alt={bon.title}
+                      className="w-12 h-12 rounded"
+                    />
                   </td>
-                  <td className="p-3">{user.userName}</td>
-                  <td className="p-3">{user.email}</td>
-                  <td className="p-3">{user.phoneNumber}</td>
-                  <td className="p-3">{user.age}</td>
-                  <td className="p-3">{new Date(user.createdAt).toLocaleDateString()}</td>
+                  <td className="p-3">{bon.title}</td>
+                  <td className="p-3">{bon.code}</td>
+                  <td className="p-3">{bon.remise}</td>
+                  <td className="p-3">{new Date(bon.duree).toLocaleDateString()}</td>
+                  <td className="p-3">{bon.description}</td>
                   <td className="p-3 space-x-2">
                     <button
                       className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded"
-                      onClick={() => setEditingUser(user)}
+                      onClick={() => setEditingBon(bon)}
                     >
                       Edit
                     </button>
                     <button
                       className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                      onClick={() => handleDelete(user._id)}
+                      onClick={() => handleDelete(bon._id)}
                     >
                       Delete
                     </button>
@@ -141,7 +136,7 @@ export const InfoSection = () => {
 
           <div className="mt-4 flex justify-between items-center text-sm">
             <p>
-              Showing {indexOfFirst + 1} to {Math.min(indexOfLast, users.length)} of {users.length} entries
+              Showing {indexOfFirst + 1} to {Math.min(indexOfLast, bons.length)} of {bons.length} entries
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -172,17 +167,17 @@ export const InfoSection = () => {
         </>
       )}
 
-      {(showModal || editingUser) && (
-        <UserFormModal
-          existingUser={editingUser || undefined}
+      {(showModal || editingBon) && (
+        <BonFormModal
+          existingBon={editingBon || undefined}
           onClose={() => {
             setShowModal(false);
-            setEditingUser(null);
+            setEditingBon(null);
           }}
           onSuccess={() => {
-            fetchUsers();
+            fetchBons();
             setShowModal(false);
-            setEditingUser(null);
+            setEditingBon(null);
           }}
         />
       )}

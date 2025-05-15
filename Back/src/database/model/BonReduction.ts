@@ -1,6 +1,7 @@
-import { model, Schema, Document, ObjectId } from 'mongoose';
+import { model, Schema, Document, ObjectId, Types } from 'mongoose';
 import { mongoosePagination, Pagination } from 'mongoose-paginate-ts';
 import { preFindHook } from '../../helpers/utils/databaseHooks';
+import IPartner from './Partner';
 
 export const DOCUMENT_NAME = 'BonReduction';
 export const COLLECTION_NAME = 'bonreduction';
@@ -12,34 +13,48 @@ export default interface IBonReduction extends Document {
   duree: Date;
   picture: string;
   description: string;
+  partner: IPartner | ObjectId;
   deletedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const schema = new Schema<IBonReduction>(
   {
     title: {
-      type: Schema.Types.String,
+      type: String,
       trim: true,
+      required: true,
     },
     code: {
-        type: Schema.Types.String,
-        trim: true,
+      type: String,
+      trim: true,
+      required: true,
     },
     remise: {
-        type: Schema.Types.String,
-        trim: true,
+      type: String,
+      trim: true,
+      required: true,
     },
     duree: {
-        type: Date,
+      type: Date,
+      required: true,
     },
     picture: {
-      type: Schema.Types.String,
+      type: String,
       trim: true,
+      required: true,
     },
     description: {
-        type: Schema.Types.String,
-        trim: true,
-      },
+      type: String,
+      trim: true,
+      required: true,
+    },
+    partner: {
+      type: Schema.Types.ObjectId,
+      ref: 'Partner',
+      required: true,
+    },
     deletedAt: {
       type: Date,
       default: null,
@@ -52,7 +67,9 @@ const schema = new Schema<IBonReduction>(
   }
 );
 
+
 preFindHook(schema);
+
 schema.plugin(mongoosePagination);
 
 export const BonReductionModel = model<IBonReduction, Pagination<IBonReduction>>(

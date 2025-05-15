@@ -12,34 +12,48 @@ export default interface ICodePromo extends Document {
   duree: Date;
   picture: string;
   description: string;
+  partner: ObjectId;
   deletedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const schema = new Schema<ICodePromo>(
   {
     title: {
-      type: Schema.Types.String,
+      type: String,
       trim: true,
+      required: true,
     },
     code: {
-        type: Schema.Types.String,
-        trim: true,
+      type: String,
+      trim: true,
+      required: true,
     },
     remise: {
-        type: Schema.Types.String,
-        trim: true,
+      type: String,
+      trim: true,
+      required: true,
     },
     duree: {
-        type: Date,
+      type: Date,
+      required: true,
     },
     picture: {
-      type: Schema.Types.String,
+      type: String,
       trim: true,
+      required: true, 
     },
     description: {
-        type: Schema.Types.String,
-        trim: true,
-      },
+      type: String,
+      trim: true,
+      required: true,
+    },
+    partner: {
+      type: Schema.Types.ObjectId,
+      ref: 'Partner',
+      required: true,
+    },
     deletedAt: {
       type: Date,
       default: null,
@@ -52,7 +66,7 @@ const schema = new Schema<ICodePromo>(
   }
 );
 
-preFindHook(schema);
+preFindHook(schema); // soft-delete filtering
 schema.plugin(mongoosePagination);
 
 export const CodePromoModel = model<ICodePromo, Pagination<ICodePromo>>(
