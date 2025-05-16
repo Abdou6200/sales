@@ -1,3 +1,4 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{html,js,ts,jsx,tsx}",
@@ -71,13 +72,24 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        slide: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        slide: "slide 30s linear infinite",
       },
     },
-    container: { center: true, padding: "2rem", screens: { "2xl": "1400px" } },
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
   },
   plugins: [],
   darkMode: ["class"],

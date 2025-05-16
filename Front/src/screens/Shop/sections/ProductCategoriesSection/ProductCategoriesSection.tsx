@@ -1,69 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "../../../../components/ui/card";
 
-// Define category data for mapping
-const categories = [
-  {
-    name: "Armchairs",
-    products: 124,
-    icon: "/group.png",
-  },
-  {
-    name: "Cabinets",
-    products: 20,
-    icon: "/group-1.png",
-  },
-  {
-    name: "Sofas",
-    products: 42,
-    icon: "/group-2.png",
-    isImage: true,
-  },
-  {
-    name: "Chairs",
-    products: 120,
-    icon: "/group-3.png",
-    isImage: true,
-  },
-  {
-    name: "Decor",
-    products: 299,
-    icon: "/group-4.png",
-  },
-];
+interface Partner {
+  _id: string;
+  companyName: string;
+  avatar: string;
+}
 
 export const ProductCategoriesSection = (): JSX.Element => {
+  const [partners, setPartners] = useState<Partner[]>([]);
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      const res = await fetch("http://localhost:3000/api/partners");
+      const data = await res.json();
+      const allPartners: Partner[] = data?.docs || [];
+
+      // Shuffle and take a selection (loop will duplicate it)
+      const selected = allPartners.sort(() => 0.5 - Math.random()).slice(0, 10);
+      setPartners(selected);
+    };
+
+    fetchPartners();
+  }, []);
+
   return (
-    <section className="flex justify-between py-[60px] px-6 md:px-12 lg:px-24 xl:px-[312px] bg-[#f9f9f9] w-full">
-      {categories.map((category, index) => (
-        <div key={index} className="flex items-start gap-5">
-          <Card className="w-16 h-16 p-0 bg-white border-none shadow-none">
-            <CardContent className="flex items-center justify-center p-0 h-full">
-              {category.isImage ? (
+    <div className="w-full overflow-hidden bg-[#f9f9f9] py-6">
+      <div className="whitespace-nowrap animate-slide flex gap-8">
+        {[...partners, ...partners].map((partner, idx) => (
+          <Card
+            key={`${partner._id}-${idx}`}
+            className="w-[100px] h-[130px] flex-shrink-0 p-2 flex flex-col items-center justify-center rounded-md border border-gray-200 bg-white shadow hover:shadow-lg transition-all"
+          >
+            <CardContent className="flex flex-col items-center justify-center p-0">
+              <div className="w-14 h-14 rounded-full overflow-hidden border border-gray-300 shadow-sm">
                 <img
-                  className="w-10 h-10"
-                  alt={category.name}
-                  src={category.icon}
+                  src={
+                    partner.avatar?.startsWith("http")
+                      ? partner.avatar
+                      : `http://localhost:3000/${partner.avatar}`
+                  }
+                  alt={partner.companyName}
+                  className="w-full h-full object-contain"
                 />
-              ) : (
-                <div
-                  className="w-10 h-10 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${category.icon})` }}
-                />
-              )}
+              </div>
+              <p className="mt-2 text-center text-xs font-medium text-black">
+                {partner.companyName}
+              </p>
             </CardContent>
           </Card>
-
-          <div className="flex flex-col items-start gap-2">
-            <h3 className="mt-[-1.00px] font-bold text-xl text-center leading-normal [font-family:'DM_Sans',Helvetica] text-black tracking-[0]">
-              {category.name}
-            </h3>
-            <p className="font-bold text-[#00000099] text-base text-center [font-family:'DM_Sans',Helvetica] tracking-[0] leading-normal">
-              {category.products} products
-            </p>
-          </div>
-        </div>
-      ))}
-    </section>
+        ))}
+      </div>
+    </div>
   );
 };

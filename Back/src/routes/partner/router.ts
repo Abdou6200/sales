@@ -6,21 +6,21 @@ import validator, { ValidationSource } from '../../helpers/utils/validator';
 import schema from './schema';
 import authorization from '../../authUtils/authorization';
 import { RoleCode } from '../../database/model/Role';
-const fileUploadHandler = new FileUploadHandler();
 
+const fileUploadHandler = new FileUploadHandler();
 const router = express.Router();
 
-router.use('/', authentication);
+router.get('/', partnerController.getAll);
 
-router
-  .route('/')
-  .post(
-    authorization([RoleCode.ADMIN]),
-    validator(schema.create),
-  //  fileUploadHandler.handleSingleFileUpload('avatar'),
+router.use(authentication);
+
+router.post(
+  '/',
+  authorization([RoleCode.ADMIN]),
+  validator(schema.create),
+  // fileUploadHandler.handleSingleFileUpload('avatar'),
   partnerController.create
-  )
-  .get(authorization([RoleCode.ADMIN, RoleCode.USER]), partnerController.getAll);
+);
 
 router
   .route('/me')

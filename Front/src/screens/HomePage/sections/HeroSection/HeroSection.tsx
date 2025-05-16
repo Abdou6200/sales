@@ -1,25 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Badge } from "../../../../components/ui/badge";
 import { Button } from "../../../../components/ui/button";
 import { Card, CardContent } from "../../../../components/ui/card";
 
+type PromoItem = {
+  _id: string;
+  picture: string;
+  remise?: string;
+  code?: string;
+};
+
 export const HeroSection = (): JSX.Element => {
   const navigate = useNavigate();
+  const [cards, setCards] = useState<PromoItem[]>([]);
 
-  const productCards = [
-    { price: "$199", backgroundImage: "/card.png" },
-    { price: "$99", backgroundImage: "/card-1.png" },
-    { price: "$199", backgroundImage: "/img-10.png" },
-    { price: "$49", backgroundImage: "/card-1.png" },
-  ];
+  const fetchRandomPromos = async () => {
+    const token = localStorage.getItem("token");
+
+    const fetchFrom = async (url: string) => {
+      const res = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      return data.docs || [];
+    };
+
+    try {
+      const [bonReductions, codePromos] = await Promise.all([
+        fetchFrom("http://localhost:3000/api/bonreduction?page=1&perPage=100"),
+        fetchFrom("http://localhost:3000/api/codepromo?page=1&perPage=100"),
+      ]);
+
+      const combinedMap = new Map<string, PromoItem>();
+      const combined = [...bonReductions, ...codePromos];
+
+      for (const item of combined) {
+        if (!combinedMap.has(item._id)) {
+          combinedMap.set(item._id, item);
+        }
+      }
+
+      const uniqueItems = Array.from(combinedMap.values());
+      const selected: PromoItem[] = [];
+
+      while (selected.length < 4 && uniqueItems.length > 0) {
+        const index = Math.floor(Math.random() * uniqueItems.length);
+        selected.push(uniqueItems.splice(index, 1)[0]);
+      }
+
+      setCards(selected);
+    } catch (err) {
+      console.error("Failed to load promo data", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchRandomPromos();
+  }, []);
 
   return (
     <section
       className="w-full bg-cover bg-center py-24 min-h-screen"
       style={{
         backgroundImage:
-          "linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(/bgred.jpg)",
+          "linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(/bgred.jpg)",
       }}
     >
       <div className="mx-auto w-full max-w-[1440px] px-6 md:px-12 lg:px-16 flex flex-row items-center justify-between gap-8 flex-wrap lg:flex-nowrap">
@@ -57,22 +105,26 @@ export const HeroSection = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Right Section – Cards Only */}
-        <div className="grid grid-cols-2 gap-4 w-[449px] flex-shrink-0">
-          {productCards.map((card, index) => (
+        {/* Right Section – Promo Cards */}
+        <div className="grid grid-cols-2 gap-4 w-[460px] flex-shrink-0">
+          {cards.map((item, index) => (
             <Card
-              key={index}
-              className="aspect-square w-full rounded-none"
-              style={{
-                backgroundImage: `url(${card.backgroundImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              key={item._id || index}
+              className="aspect-square w-full rounded-xl overflow-hidden shadow-lg border border-white/10 hover:shadow-red-500/30 transition-all duration-300"
             >
-              <CardContent className="p-4 h-full flex items-start justify-start">
-                <span className="font-medium text-lg sm:text-xl text-[#947458] bg-black/50 px-2 rounded">
-                  {card.price}
-                </span>
+              <CardContent className="relative h-full p-0 group">
+                <div className="absolute top-2 left-2 bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded shadow">
+                  {item.remise || item.code}
+                </div>
+                <img
+                  src={
+                    item.picture?.startsWith("http")
+                      ? item.picture
+                      : `http://localhost:3000/${item.picture}`
+                  }
+                  alt="Promo"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
               </CardContent>
             </Card>
           ))}

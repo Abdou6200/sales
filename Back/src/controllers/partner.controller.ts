@@ -7,12 +7,10 @@ import {
   SuccessResponse,
   SuccessResponsePaginate,
 } from '../core/ApiResponse';
-import { log } from 'console';
 
 export const create = asyncHandler(
   async (req: ProtectedRequest, res: Response) => {
     const { body, file } = req;
-    console.log(body)
     const result = await partnerService.create({ body, file });
     new SuccessResponse('Partner created', result).send(res);
   }
@@ -24,7 +22,7 @@ export const getAll = asyncHandler(
     const result = await partnerService.getAll(query);
 
     new SuccessResponsePaginate(
-      'All Partners returned successfuly',
+      'All Partners returned successfully',
       result.docs,
       result.meta
     ).send(res);
