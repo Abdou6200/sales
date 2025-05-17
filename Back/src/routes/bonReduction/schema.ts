@@ -9,7 +9,7 @@ export default {
   create: Joi.object().keys({
     title: Joi.string().min(3).max(200).required(),
     code: Joi.string().min(3).max(200).required(),
-    remise: Joi.string().min(3).max(200).required(),
+    remise: Joi.string().min(2).max(200).required(),
     duree: Joi.date().required(),
     description: Joi.string().min(3).max(400).required(),
     partner: JoiObjectId().required(),
@@ -18,7 +18,7 @@ export default {
   update: Joi.object().keys({
     title: Joi.string().min(3).max(200),
     code: Joi.string().min(3).max(200),
-    remise: Joi.string().min(3).max(200),
+    remise: Joi.string().min(2).max(200),
     duree: Joi.date(),
     description: Joi.string().min(3).max(400),
     partner: JoiObjectId(),

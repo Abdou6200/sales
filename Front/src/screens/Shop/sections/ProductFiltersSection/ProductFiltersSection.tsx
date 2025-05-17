@@ -8,11 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../../components/ui/select";
+import { Dialog, DialogContent, DialogTrigger } from "../../../../components/ui/Dialog";
+import { Button } from "../../../../components/ui/button";
 
 interface Offer {
   _id: string;
   title: string;
-  remise: number;
+  remise: string | number;
+  code?: string;
+  source?: "bonreduction" | "codepromo";
   partner: {
     companyName: string;
     avatar: string;
@@ -30,6 +34,7 @@ export const ProductFiltersSection = (): JSX.Element => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedPartners, setSelectedPartners] = useState<string[]>([]);
   const [sortOrder, setSortOrder] = useState<string>("latest");
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
   useEffect(() => {
     fetchAllData();
@@ -38,6 +43,24 @@ export const ProductFiltersSection = (): JSX.Element => {
   useEffect(() => {
     filterOffers();
   }, [selectedCategories, selectedPartners, sortOrder, offers]);
+
+  const normalizeOffers = (offers: any[], source: "bonreduction" | "codepromo"): Offer[] =>
+    offers.map((offer) => ({
+      ...offer,
+      source,
+      partner: {
+        ...offer.partner,
+        avatar: offer.picture || "",
+      },
+      category:
+        typeof offer.category === "string"
+          ? { name: offer.category }
+          : offer.category || { name: "Unknown" },
+      remise:
+        typeof offer.remise === "string" && offer.remise.includes("%")
+          ? offer.remise.replace("%", "")
+          : offer.remise,
+    }));
 
   const fetchAllData = async () => {
     try {
@@ -55,7 +78,10 @@ export const ProductFiltersSection = (): JSX.Element => {
 
       const categories = (catData.docs || []).map((c: any) => c.name);
       const partners = (partData.docs || []).map((p: any) => p.companyName);
-      const allOffers = [...(codePromo.docs || []), ...(bonReduction.docs || [])];
+      const allOffers = [
+        ...normalizeOffers(codePromo.docs || [], "codepromo"),
+        ...normalizeOffers(bonReduction.docs || [], "bonreduction"),
+      ];
 
       setCategories(categories);
       setPartners(partners);
@@ -79,9 +105,9 @@ export const ProductFiltersSection = (): JSX.Element => {
     }
 
     if (sortOrder === "price-low") {
-      filtered.sort((a, b) => a.remise - b.remise);
+      filtered.sort((a, b) => Number(a.remise) - Number(b.remise));
     } else if (sortOrder === "price-high") {
-      filtered.sort((a, b) => b.remise - a.remise);
+      filtered.sort((a, b) => Number(b.remise) - Number(a.remise));
     }
 
     setFilteredOffers(filtered);
@@ -152,25 +178,67 @@ export const ProductFiltersSection = (): JSX.Element => {
 
         <div className="flex flex-wrap gap-6">
           {filteredOffers.map((offer, idx) => (
-            <Card key={idx} className="w-[306px] border border-gray-200 rounded-xl overflow-hidden shadow hover:shadow-lg transition">
-              <div className="flex justify-center items-center py-4">
-                <img
-                  src={
-                    offer.partner?.avatar?.startsWith("http")
-                      ? offer.partner.avatar
-                      : `http://localhost:3000/${offer.partner?.picture?.replace(/^\/+/, "")}`
-                  }
-                  alt={offer.partner?.companyName || "Unknown"}
-                  className="w-16 h-16 object-contain rounded-full border"
-                />
-              </div>
-              <CardContent className="flex flex-col items-center gap-2 pb-4">
-                <h4 className="text-xl font-bold text-center">{offer.title}</h4>
-                <div className="text-lg text-gray-600">
-                  {offer.remise} Off
+            <Dialog key={idx}>
+              <DialogTrigger asChild>
+                <Card
+                  className="w-[306px] border border-gray-200 rounded-xl overflow-hidden shadow hover:shadow-lg transition cursor-pointer"
+                  onClick={() => setSelectedOffer(offer)}
+                >
+                  <div className="flex justify-center items-center py-4">
+                    <img
+                      src={offer.partner?.avatar || "/default-avatar.png"}
+                      alt={offer.partner?.companyName || "Unknown"}
+                      className="w-16 h-16 object-contain rounded-full border"
+                    />
+                  </div>
+                  <CardContent className="flex flex-col items-center gap-2 pb-4">
+                    <h4 className="text-xl font-bold text-center">{offer.title}</h4>
+                    <div className="text-lg text-gray-600">{offer.remise}% Off</div>
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="max-w-md text-center p-6 bg-white rounded-xl shadow-xl">
+                <div className="flex flex-col items-center gap-4">
+                  <img src="/Logo1BG.png" alt="Logo" className="w-28 h-28 object-contain" />
+                  <img
+                    src={selectedOffer?.partner.avatar || "/default-avatar.png"}
+                    alt={selectedOffer?.partner.companyName || "Unknown"}
+                    className="w-24 h-24 rounded-full border"
+                  />
+                  <h3 className="text-2xl font-bold">{selectedOffer?.title}</h3>
+                  <p className="text-xl text-green-600 font-semibold">
+                    {selectedOffer?.remise}% Off
+                  </p>
+                  <p className="text-sm font-semibold text-gray-700">
+                    Type: {selectedOffer?.source === "bonreduction" ? "Bon de Réduction" : "Code Promo"}
+                  </p>
+                 {selectedOffer?.code && (
+                    <div className="mt-2 flex flex-col items-center">
+                      <p
+                        className={`text-lg font-mono py-2 px-4 rounded mt-1 transition-all w-fit ${
+                          localStorage.getItem("token")
+                            ? "bg-gray-100 text-black"
+                            : "bg-gray-200 text-gray-400 blur-sm select-none pointer-events-none"
+                        }`}
+                      >
+                        {selectedOffer.code}
+                      </p>
+
+                      {!localStorage.getItem("token") ? (
+                        <p className="text-sm text-gray-500 mt-2 italic">Login to get the code</p>
+                      ) : (
+                        <Button
+                          className="mt-2"
+                          onClick={() => navigator.clipboard.writeText(selectedOffer.code || "")}
+                        >
+                          Copy Code
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </div>
-              </CardContent>
-            </Card>
+              </DialogContent>
+            </Dialog>
           ))}
         </div>
       </div>

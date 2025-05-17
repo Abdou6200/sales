@@ -56,28 +56,28 @@ export const NewProductsSection = (): JSX.Element => {
   const filteredPartners = partners.filter((partner) => partner.category === selectedCategory);
 
   return (
-    <section className="flex flex-col items-center gap-[60px] px-6 py-[120px] w-full bg-[#f8f9fa]">
-      <div className="flex flex-col items-center gap-10">
-        <h2 className="font-bold text-[50px] text-defaultblack [font-family:'DM_Sans',Helvetica]">
-          Categories
-        </h2>
+    <section className="flex flex-col items-center gap-10 px-6 py-20 w-full bg-[#f8f9fa]">
+      <h2 className="font-bold text-[50px] text-defaultblack text-center">Categories</h2>
 
-        <Tabs defaultValue={selectedCategory} className="w-full" onValueChange={setSelectedCategory}>
-          <TabsList className="flex gap-[68px] bg-transparent h-auto p-0">
-            {categories.map((category) => (
-              <TabsTrigger
-                key={category._id}
-                value={category._id}
-                className="px-2 py-2 rounded-none data-[state=active]:border-b-2 data-[state=active]:border-[#947458] data-[state=active]:shadow-none data-[state=active]:bg-transparent [font-family:'DM_Sans',Helvetica] font-medium text-2xl text-defaultblack"
-              >
-                {category.name}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
-      </div>
+      {/* Tabs List */}
+      <Tabs defaultValue={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+        <TabsList className="flex flex-wrap justify-center gap-6 bg-transparent p-0 border-none">
+          {categories.map((category) => (
+            <TabsTrigger
+              key={category._id}
+              value={category._id}
+              className="text-lg font-medium text-[#0f172a] px-2 pb-1 hover:text-[#947458] border-b-2 border-transparent hover:border-[#947458]
+                         data-[state=active]:text-[#947458] data-[state=active]:border-[#947458]
+                         data-[state=active]:bg-transparent data-[state=active]:shadow-none focus:outline-none rounded-none"
+            >
+              {category.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
 
-      <div className="flex flex-wrap justify-center gap-6">
+      {/* Partner Cards */}
+      <div className="flex flex-wrap justify-center gap-6 w-full">
         {filteredPartners.map((partner) => (
           <Card
             key={partner._id}
@@ -95,8 +95,7 @@ export const NewProductsSection = (): JSX.Element => {
                   className="object-contain max-h-full"
                 />
               </div>
-
-              <h3 className="text-xl font-bold text-black">{partner.companyName}</h3>
+              <h3 className="text-xl font-bold text-black text-center">{partner.companyName}</h3>
             </CardContent>
           </Card>
         ))}

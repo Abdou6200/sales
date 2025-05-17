@@ -2,6 +2,7 @@ import { model, Schema, Document, ObjectId } from 'mongoose';
 import { mongoosePagination, Pagination } from 'mongoose-paginate-ts';
 import { preFindHook } from '../../helpers/utils/databaseHooks';
 
+
 export const DOCUMENT_NAME = 'CodePromo';
 export const COLLECTION_NAME = 'codepromo';
 

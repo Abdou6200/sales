@@ -14,7 +14,7 @@ router
   .route('/')
   .post(
     authentication,
-    authorization([RoleCode.ADMIN]),
+    authorization([RoleCode.ADMIN,RoleCode.PARTNER]),
     fileUploadHandler.handleSingleFileUpload('picture'),
     validator(schema.create),
     codePromoController.create
